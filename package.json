@@ -1,0 +1,19 @@
+{
+  "name": "pfe_project_tracking_ennachat_redwan_node_server",
+  "version": "1.0.0",
+  "description": "my PFE licence pro LPABD (STAGE)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ennachat Redwan",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1",
+    "guid": "^0.0.12",
+    "jsonwebtoken": "^8.5.1",
+    "mysql": "^2.18.1",
+    "uuid": "^8.3.2"
+  }
+}
