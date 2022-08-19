@@ -1,6 +1,6 @@
 const con = require("../models/connection");
 const uuid = require("uuid").v1;
-const jwt=require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 const register_user_post = (req, res) => {
   const user = req.body;
@@ -14,7 +14,7 @@ const register_user_post = (req, res) => {
         res.status(500).send();
         throw err;
       }
-      res.json({ key: key });
+      res.json({ key });
     }
   );
 };
@@ -29,11 +29,15 @@ const login_user_post = (req, res) => {
     if (rows[0][0] == null) res.status(401).json({ user: null });
     else if (rows[0][0].state == 0) res.status(302).json({ state: 0 });
     else {
-      User=JSON.parse(JSON.stringify(rows[0][0]));
-      jwt.sign(User,process.env.TOKEN_KEY,{expiresIn:'20s'},(err,token)=>{
-        if(err) throw err;
-        res.json({token});
-      })
+      User = JSON.parse(JSON.stringify(rows[0][0]));
+      jwt.sign(
+        User,
+        process.env.TOKEN_KEY,
+        (err, token) => {
+          if (err) throw err;
+          res.json({ User ,token });
+        }
+      );
     }
   });
 };

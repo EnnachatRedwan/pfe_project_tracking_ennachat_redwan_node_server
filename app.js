@@ -11,6 +11,8 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(bodyParser.json({}))
+
 app.use("/users", users_router);
 
 app.get("/", (req, res) => {
