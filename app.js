@@ -1,6 +1,7 @@
 const express = require("express");
 
 const users_router = require("./routes/usersRoutes");
+const projects_router=require("./routes/projectsRoutes");
 const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
 
@@ -14,6 +15,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({}))
 
 app.use("/users", users_router);
+
+app.use("/projects",projects_router);
 
 app.get("/", (req, res) => {
   const token = req.body.token;
