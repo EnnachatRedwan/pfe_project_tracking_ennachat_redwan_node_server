@@ -9,14 +9,14 @@ const projects_get = (req, res) => {
       throw err;
     }
     con.query(
-      "select * from project where leader=?",
+      "call getProjects(?)",
       user.username,
       (err, result) => {
         if (err) {
           res.status(500).send();
           throw err;
         }
-        res.send(result);
+        res.send(result[0]);
       }
     );
   });
