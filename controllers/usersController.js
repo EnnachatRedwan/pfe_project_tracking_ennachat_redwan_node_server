@@ -1,23 +1,5 @@
 const con = require("../models/connection");
-const uuid = require("uuid").v1;
 const jwt = require("jsonwebtoken");
-
-const register_user_post = (req, res) => {
-  const user = req.body;
-  const key = uuid().substring(0, 5);
-  con.query(
-    "insert into Employee (username,fullname,empKey) values(?,?,?)",
-    [user.username, user.fullname, key],
-    (err, result) => {
-      if (err) {
-        if (err.code == "ER_DUP_ENTRY") res.status(409).send();
-        res.status(500).send();
-        throw err;
-      }
-      res.json({ key });
-    }
-  );
-};
 
 const login_user_post = (req, res) => {
   const user = req.body;
@@ -59,7 +41,6 @@ const activate_user_post = (req, res) => {
 };
 
 module.exports = {
-  register_user_post,
   login_user_post,
   activate_user_post,
 };
