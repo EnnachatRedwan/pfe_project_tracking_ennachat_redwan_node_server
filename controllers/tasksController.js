@@ -26,7 +26,6 @@ const tasks_get = (req, res) => {
 const task_post = (req, res) => {
   const token = req.params["token"];
   const task = req.body;
-  console.log(task);
   jwt.verify(token, process.env.TOKEN_KEY, (err, user) => {
     if (err) {
       res.status(500).send();
