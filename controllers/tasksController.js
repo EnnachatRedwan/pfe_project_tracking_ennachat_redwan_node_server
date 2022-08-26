@@ -33,7 +33,7 @@ const task_post = (req, res) => {
     }
     con.query(
       "call insertTask(?,?,?,?);",
-      [task.title, task.addingDate,task.projectId, user.username],
+      [task.title, task.addingDate, task.projectId, user.username],
       (err, result) => {
         if (err) {
           res.status(500).send();
@@ -92,4 +92,56 @@ const start_task_post = (req, res) => {
   });
 };
 
-module.exports = { tasks_get, task_delete, start_task_post, task_post };
+const task_archive_post = (req, res) => {
+  const token = req.params["token"];
+  const project = req.body;
+  jwt.verify(token, process.env.TOKEN_KEY, (err, user) => {
+    if (err) {
+      res.status(500).send();
+      throw err;
+    }
+    con.query(
+      "call archiveTask(?,?)",
+      [user.username, project.id],
+      (err) => {
+        if (err) {
+          res.status(500).send();
+          throw err;
+        }
+        res.send();
+      }
+    );
+  });
+};
+
+const task_unarchive_post = (req, res) => {
+  const token = req.params["token"];
+  const task = req.body;
+  jwt.verify(token, process.env.TOKEN_KEY, (err, user) => {
+    if (err) {
+      res.status(500).send();
+      throw err;
+    }
+    con.query(
+      "delete from taskArchive where username=? and id_task=?",
+      [user.username, task.id],
+      (err) => {
+        if (err) {
+          res.status(500).send();
+          throw err;
+        }
+        res.send();
+      }
+    );
+  });
+};
+
+
+module.exports = {
+  tasks_get,
+  task_delete,
+  start_task_post,
+  task_post,
+  task_archive_post,
+  task_unarchive_post,
+};
