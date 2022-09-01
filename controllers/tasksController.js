@@ -67,6 +67,28 @@ const task_delete = (req, res) => {
   });
 };
 
+const task_patch = (req, res) => {
+  const token = req.params["token"];
+  const task = req.body;
+  jwt.verify(token, process.env.TOKEN_KEY, (err, user) => {
+    if (err) {
+      res.status(403).send();
+      throw err;
+    }
+    con.query(
+      "call editTask(?,?,?,?)",
+      [task.id, task.title, task.addingDate, user.username],
+      (err) => {
+        if (err) {
+          res.status(403).send();
+          throw err;
+        }
+        res.send();
+      }
+    );
+  });
+};
+
 const start_task_post = (req, res) => {
   const token = req.params["token"];
   const task = req.body;
@@ -199,7 +221,6 @@ const unaffect_task_post = (req, res) => {
 };
 
 const task_employee_get = (req, res) => {
-  
   const token = req.params["token"];
   const taskId = req.params["taskId"];
   jwt.verify(token, process.env.TOKEN_KEY, (err, user) => {
@@ -210,7 +231,7 @@ const task_employee_get = (req, res) => {
     con.query(
       "select username from employee where username in (select username from empTask where id_task=?)",
       [taskId],
-      (err,result) => {
+      (err, result) => {
         if (err) {
           res.status(500).send();
           throw err;
@@ -231,5 +252,6 @@ module.exports = {
   archived_tasks_get,
   affect_task_post,
   unaffect_task_post,
-  task_employee_get
+  task_employee_get,
+  task_patch,
 };

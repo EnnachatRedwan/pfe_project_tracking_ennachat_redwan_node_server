@@ -44,7 +44,6 @@ const step_post = (req, res) => {
 const check_step_post = (req, res) => {
   const token = req.params["token"];
   const taskId = req.params["taskId"];
-  console.log('check');
   jwt.verify(token, process.env.TOKEN_KEY, (err, user) => {
     if (err) {
       res.status(403).send();
@@ -63,7 +62,6 @@ const check_step_post = (req, res) => {
 const uncheck_step_post = (req, res) => {
   const token = req.params["token"];
   const taskId = req.params["taskId"];
-  console.log('uncheck');
   jwt.verify(token, process.env.TOKEN_KEY, (err, user) => {
     if (err) {
       res.status(403).send();
