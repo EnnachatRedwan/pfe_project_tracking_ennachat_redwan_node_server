@@ -32,4 +32,6 @@ app.use((req, res) => {
   res.send("<h1>404</h1>");
 });
 
-app.listen(3000);
+const port=process.env.PORT||3000;
+
+app.listen(port);
