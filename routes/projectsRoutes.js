@@ -15,4 +15,6 @@ router.post("/:token", projectsController.project_post);
 
 router.delete("/:token", projectsController.project_delete);
 
+router.patch("/:token", projectsController.project_patch);
+
 module.exports = router;

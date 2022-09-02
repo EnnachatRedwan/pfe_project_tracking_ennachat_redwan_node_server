@@ -62,6 +62,28 @@ const project_delete = (req, res) => {
   });
 };
 
+const project_patch = (req, res) => {
+  const token = req.params["token"];
+  const project = req.body;
+  jwt.verify(token, process.env.TOKEN_KEY, (err, user) => {
+    if (err) {
+      res.status(403).send();
+      throw err;
+    }
+    con.query(
+      "call editProject(?,?,?,?,?)",
+      [project.id, project.title, project.addingDate,project.type, user.username],
+      (err) => {
+        if (err) {
+          res.status(403).send();
+          throw err;
+        }
+        res.send();
+      }
+    );
+  });
+};
+
 const start_project_post = (req, res) => {
   const token = req.params["token"];
   const project = req.body;
@@ -138,4 +160,5 @@ module.exports = {
   start_project_post,
   project_archive_post,
   project_unarchive_post,
+  project_patch,
 };
