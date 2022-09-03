@@ -85,17 +85,13 @@ const step_delete = (req, res) => {
       res.status(500).send();
       throw err;
     }
-    con.query(
-      "delete from step where id_step =? and id_task in (select id_task from task where project_id in (select id_prj from project where leader =?));",
-      [step.id, user.username],
-      (err) => {
-        if (err) {
-          res.status(500).send();
-          throw err;
-        }
-        res.send();
+    con.query("call deleteStep(?,?)", [user.username, step.id], (err) => {
+      if (err) {
+        res.status(500).send();
+        throw err;
       }
-    );
+      res.send();
+    });
   });
 };
 
@@ -109,7 +105,7 @@ const step_update = (req, res) => {
     }
     con.query(
       "update step set title=?,description=? where id_step=? and id_task in (select id_task from task where project_id in (select id_prj from project where leader =?));",
-      [step.title,step.desc,step.id, user.username],
+      [step.title, step.desc, step.id, user.username],
       (err) => {
         if (err) {
           res.status(500).send();

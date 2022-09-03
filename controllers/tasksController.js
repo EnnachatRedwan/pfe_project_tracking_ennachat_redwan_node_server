@@ -54,8 +54,8 @@ const task_delete = (req, res) => {
       throw err;
     }
     con.query(
-      "delete from task where id_task=? and project_id in(select id_prj from project where leader=?)",
-      [task.id, user.username],
+      "call deleteTask(?,?)",
+      [user.username,task.id],
       (err) => {
         if (err) {
           res.status(500).send();

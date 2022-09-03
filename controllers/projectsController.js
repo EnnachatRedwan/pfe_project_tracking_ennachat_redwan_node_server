@@ -98,7 +98,7 @@ const start_project_post = (req, res) => {
     con.query(
       "update project set isStarted=true,startingDate=? where id_prj=? and leader=?",
       [date, project.id, user.username],
-      (err, result) => {
+      (err) => {
         if (err) {
           res.status(500).send();
           throw err;
