@@ -141,7 +141,7 @@ const task_unarchive_post = (req, res) => {
       throw err;
     }
     con.query(
-      "delete from taskArchive where username=? and id_task=?",
+      "delete from taskarchive where username=? and id_task=?",
       [user.username, task.id],
       (err) => {
         if (err) {
@@ -229,7 +229,7 @@ const task_employee_get = (req, res) => {
       throw err;
     }
     con.query(
-      "select username from employee where username in (select username from empTask where id_task=?)",
+      "select username from employee where username in (select username from emptask where id_task=?)",
       [taskId],
       (err, result) => {
         if (err) {

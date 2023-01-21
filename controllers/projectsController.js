@@ -140,7 +140,7 @@ const project_unarchive_post = (req, res) => {
       throw err;
     }
     con.query(
-      "delete from projectArchive where username=? and id_prj=?",
+      "delete from projectarchive where username=? and id_prj=?",
       [user.username, project.id],
       (err) => {
         if (err) {

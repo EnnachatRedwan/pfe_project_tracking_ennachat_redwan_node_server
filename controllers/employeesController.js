@@ -34,7 +34,7 @@ const employee_post = (req, res) => {
       throw err;
     }
     con.query(
-      "insert into Employee (username,fullname,empKey,leader) values(?,?,?,?)",
+      "insert into employee (username,fullname,empKey,leader) values(?,?,?,?)",
       [employee.username, employee.fullname, key,user.username],
       (err, result) => {
         if (err) {
